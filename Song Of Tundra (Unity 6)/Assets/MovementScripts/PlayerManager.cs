@@ -5,6 +5,10 @@ public class PlayerManager : MonoBehaviour
     InputManager inputManager;
     PlayerLocomotion playerLocomotion;
 
+    [SerializeField] private PlayerCrochVisualisation crochVisualisation; // Вызываем тут класс с ссылкой в инспекторе
+
+    public MovementState currentState; // перменная для отслеживанияя текущего состояния передвижения
+
     private void Awake()
     {
         inputManager = GetComponent<InputManager>();
@@ -17,11 +21,28 @@ public class PlayerManager : MonoBehaviour
 
         // Дебажим кнопки атак
         HandleCombat();
+
+        // Вызываем проверку текущего состояния передвижения
+        MovementStateCheck();
+        playerLocomotion.SetStatedSpeed(currentState);
+
+        // Визуалиция приседа
+        crochVisualisation.OnCrouchAnimation(currentState);
     }
 
     private void FixedUpdate() // фиксированое кол-во кадров, поэтому именно тут обращаемся к нашим движениям
     {
         playerLocomotion.HandleAllMovement();
+    }
+
+    // Проверка текущего состояния передвижения
+    public void MovementStateCheck()
+    {
+        if (inputManager.crouchInput) { currentState = MovementState.Crouch; return; }
+        if (inputManager.walkInput) { currentState = MovementState.Walk; return; }
+        if (inputManager.movementInput != Vector2.zero) { currentState = MovementState.Run; return; }
+
+        currentState = MovementState.Idle; 
     }
 
     // ДЕБАГ РАБОТЫ АТАК, ПОТОМ УДАЛИТЬ

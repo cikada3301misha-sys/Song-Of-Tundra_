@@ -6,13 +6,13 @@ public class SnowSlowZone : MonoBehaviour
     {
         PlayerLocomotion playerLocomotion = other.GetComponent<PlayerLocomotion>(); // ѕередаем класс с проверкой в локальную переменную
 
-        if (playerLocomotion != null) playerLocomotion.speedMultiplier = 0.4f; // ѕередаем переменной множител€ скорорсти значение
+        if (playerLocomotion != null) playerLocomotion.snowMultiplier = 0.4f; // ѕередаем переменной множител€ скорорсти значение
     }
 
     private void OnTriggerExit(Collider other) // ѕри выходе из снега
     {
         PlayerLocomotion playerLocomotion = other.GetComponent<PlayerLocomotion>();
 
-        if (playerLocomotion != null) playerLocomotion.speedMultiplier = 1f;
+        if (playerLocomotion != null) playerLocomotion.snowMultiplier = 1f;
     }
 }

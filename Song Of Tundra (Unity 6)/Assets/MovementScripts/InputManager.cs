@@ -16,6 +16,10 @@ public class InputManager : MonoBehaviour
     public bool attackInput;
     public bool altAttackInput;
 
+    // Переменные для бдлокировки бега и для приседа
+    public bool walkInput;
+    public bool crouchInput;
+
     // Всю часть ниже я нихуя не понимаю но она работает
     private void OnEnable() // когда объект активен
     {
@@ -34,6 +38,13 @@ public class InputManager : MonoBehaviour
 
             playerControls.Player.AltAttack.performed += OnAltAttack;
             playerControls.Player.AltAttack.canceled += OnAltAttack;
+
+            // Ввод блокировки бега и приседа
+            playerControls.Player.Walk.performed += OnWalk;
+            playerControls.Player.Walk.canceled += OnWalk;
+
+            playerControls.Player.Crouch.performed += OnCrouch;
+            playerControls.Player.Crouch.canceled += OnCrouch;
         }
 
         // Включаем приём инпута
@@ -74,5 +85,16 @@ public class InputManager : MonoBehaviour
     private void OnAltAttack(InputAction.CallbackContext context)
     {
         altAttackInput = context.ReadValueAsButton();
+    }
+
+    // Обработчики ввода блокировки бега и приседа
+    private void OnWalk(InputAction.CallbackContext context)
+    {
+        walkInput = context.ReadValueAsButton();
+    }
+
+    private void OnCrouch(InputAction.CallbackContext context)
+    {
+        crouchInput = context.ReadValueAsButton();
     }
 }
