@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TambourineRhytm : MonoBehaviour
+public class TambourineRhythm : MonoBehaviour
 {
     // Start is called before the first frame update
-    private string accuracy = "bad"; // значение точности попадания
+    private string _accuracy = "bad"; // значение точности попадания
     public bool newHit = true; // переменная для проверки был ли совершен удар в текущей итерации
     public GameObject light; // мигающий свет над врагом
     public TMP_Text resultText; // результат попадания
     public List<int> melodyList = new List<int>(); // список для задания ритма мелодии. 1 - удар есть, 0 - удара нет
-    private int noteCount = 0; // номер текущей ноты
+    private int _noteCount = 0; // номер текущей ноты
 
     void Start()
     {
@@ -23,28 +23,25 @@ public class TambourineRhytm : MonoBehaviour
     void Update()
     {
     }
-    public void NextNote(){ // проверяем нужно ли делать удар в текущей итерации
-        if(melodyList[noteCount % melodyList.Count] == 1){
-            StartCoroutine(Rhytm());
-        }
-        else{
-            StartCoroutine(Miss());
-        }
-        noteCount += 1;
+    public void NextNote()
+    {
+        // проверяем нужно ли делать удар в текущей итерации
+        StartCoroutine(melodyList[_noteCount % melodyList.Count] == 1 ? Rhythm() : Miss());
+        _noteCount += 1;
     }
-    public IEnumerator Rhytm(){ // изменяем значение accuracy в зависимости от времени
+    public IEnumerator Rhythm(){ // изменяем значение accuracy в зависимости от времени
         newHit = true;
-        accuracy = "bad";
+        _accuracy = "bad";
         yield return new WaitForSeconds(0.2f);
-        accuracy = "okay";
+        _accuracy = "okay";
         yield return new WaitForSeconds(0.15f);
         light.SetActive(true);
-        accuracy = "super";
+        _accuracy = "super";
         yield return new WaitForSeconds(0.15f);
         light.SetActive(false);
-        accuracy = "okay";
+        _accuracy = "okay";
         yield return new WaitForSeconds(0.2f);
-        accuracy = "bad";
+        _accuracy = "bad";
         NextNote();
     }
     public IEnumerator Miss()
@@ -54,17 +51,18 @@ public class TambourineRhytm : MonoBehaviour
     }
     public void Hit() // выполняется при нажатии на кнопку, проверяем текущее значение accuracy
     {
-        if(!newHit || accuracy == "bad")
+        if(!newHit || _accuracy == "bad")
         {
             StartCoroutine(TextShow("Неудачно"));
         }
-        else if(accuracy == "okay")
+        else switch (_accuracy)
         {
-            StartCoroutine(TextShow("Почти в такт"));
-        }
-        else if(accuracy == "super")
-        {
-            StartCoroutine(TextShow("В такт"));
+            case "okay":
+                StartCoroutine(TextShow("Почти в такт"));
+                break;
+            case "super":
+                StartCoroutine(TextShow("В такт"));
+                break;
         }
         newHit = false;
     }
