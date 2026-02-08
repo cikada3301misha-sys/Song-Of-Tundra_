@@ -9,10 +9,11 @@ public class TambourineRhythm : MonoBehaviour
     // Start is called before the first frame update
     private string _accuracy = "bad"; // значение точности попадания
     public bool newHit = true; // переменная для проверки был ли совершен удар в текущей итерации
-    public GameObject light; // мигающий свет над врагом
+    public GameObject light, greenlight, yellowlight, redlight; // мигающий свет над врагом
     public TMP_Text resultText; // результат попадания
     public List<int> melodyList = new List<int>(); // список для задания ритма мелодии. 1 - удар есть, 0 - удара нет
     private int _noteCount = 0; // номер текущей ноты
+    public EnemyLives NowEnemy;
 
     void Start()
     {
@@ -53,23 +54,27 @@ public class TambourineRhythm : MonoBehaviour
     {
         if(!newHit || _accuracy == "bad")
         {
-            StartCoroutine(TextShow("Неудачно"));
+            StartCoroutine(TextShow("Неудачно", redlight));
         }
         else switch (_accuracy)
         {
             case "okay":
-                StartCoroutine(TextShow("Почти в такт"));
+                StartCoroutine(TextShow("Почти в такт",yellowlight));
+                NowEnemy.DecreaseShield(0.2f); // уменьшение щита у врага
                 break;
             case "super":
-                StartCoroutine(TextShow("В такт"));
+                StartCoroutine(TextShow("В такт", greenlight));
+                NowEnemy.DecreaseShield(0.1f);
                 break;
         }
         newHit = false;
     }
-    public IEnumerator TextShow(string result) // выводим результат на экран после удара
+    public IEnumerator TextShow(string result, GameObject resultLight) // выводим результат на экран после удара
     {
         resultText.text = result;
+        resultLight.SetActive(true); // включение света, который соответствует результату
         yield return new WaitForSeconds(0.5f);
-        resultText.text = ""; 
+        resultText.text = "";
+        resultLight.SetActive(false); 
     }
 }
