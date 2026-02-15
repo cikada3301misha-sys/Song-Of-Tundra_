@@ -19,6 +19,13 @@ public class PlayerLocomotion : MonoBehaviour
     // Переменная модификатор зависиящая от состояния передвижения игрока
     public float currentSpeedMultiplier;
 
+    [Header("Jump")]
+    public float jumpHeight = 1.5f;
+    public float groundCheckDistance = 0.2f;
+    public LayerMask groundLayers = ~0; // по умолчанию всё
+
+    public bool isGrounded;
+
     private void Awake()
     {
         inputManager = GetComponent<InputManager>();
@@ -30,6 +37,9 @@ public class PlayerLocomotion : MonoBehaviour
     {
         HandleMovement();
         HandleRotation();
+
+        HandleJump(inputManager.jumpInput);
+        inputManager.ConsumeJumpInput();
     }
 
     private void HandleMovement()
@@ -42,7 +52,8 @@ public class PlayerLocomotion : MonoBehaviour
         moveDirection *= movementSpeed * currentSpeedMultiplier * snowMultiplier; // Результирующее направление с учетом изменений
 
         Vector3 movementVelocity = moveDirection;
-        playerRigidbody.linearVelocity = movementVelocity;
+        var currentVel = playerRigidbody.linearVelocity;
+        playerRigidbody.linearVelocity = new Vector3(movementVelocity.x, currentVel.y, movementVelocity.z);
     }
 
     private void HandleRotation()
@@ -83,5 +94,26 @@ public class PlayerLocomotion : MonoBehaviour
                 currentSpeedMultiplier = 0f; 
                 break;
         }
+    }
+
+    public void HandleJump(bool jumpPressed)
+    {
+        CheckGround();
+
+        if (!jumpPressed) return;
+        if (!isGrounded) return;
+
+        // v = sqrt(2 * g * h)
+        float jumpVelocity = Mathf.Sqrt(2f * Physics.gravity.magnitude * jumpHeight);
+
+        var v = playerRigidbody.linearVelocity;
+        playerRigidbody.linearVelocity = new Vector3(v.x, jumpVelocity, v.z);
+    }
+
+    private void CheckGround()
+    {
+        // маленький луч вниз из центра
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+        isGrounded = Physics.Raycast(origin, Vector3.down, groundCheckDistance + 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
     }
 }
