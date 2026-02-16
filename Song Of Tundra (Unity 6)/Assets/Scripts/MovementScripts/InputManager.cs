@@ -20,6 +20,9 @@ public class InputManager : MonoBehaviour
     public bool walkInput;
     public bool crouchInput;
 
+    // Переменная для прыжка
+    public bool jumpInput;
+
     // Всю часть ниже я нихуя не понимаю но она работает
     private void OnEnable() // когда объект активен
     {
@@ -45,6 +48,9 @@ public class InputManager : MonoBehaviour
 
             playerControls.Player.Crouch.performed += OnCrouch;
             playerControls.Player.Crouch.canceled += OnCrouch;
+
+            // Ввод прыжка
+            playerControls.Player.Jump.performed += OnJump;
         }
 
         // Включаем приём инпута
@@ -96,5 +102,16 @@ public class InputManager : MonoBehaviour
     private void OnCrouch(InputAction.CallbackContext context)
     {
         crouchInput = context.ReadValueAsButton();
+    }
+
+    // Обработчик ввода прыжка
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            jumpInput = true;
+    }
+    public void ConsumeJumpInput()
+    {
+        jumpInput = false;
     }
 }
