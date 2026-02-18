@@ -822,7 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b401ee7a64e6e4b9985c65bfa82c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
-  crochVisualisation: {fileID: 0}
+  crochVisualisation: {fileID: 1105910377}
   currentState: 0
 --- !u!1 &837016281
 GameObject:
