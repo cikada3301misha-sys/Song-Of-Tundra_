@@ -382,11 +382,11 @@ Transform:
   m_GameObject: {fileID: 613590163}
   serializedVersion: 2
   m_LocalRotation: {x: 0.25887313, y: 2.5687183e-11, z: -6.884402e-12, w: 0.9659113}
-  m_LocalPosition: {x: 0, y: 2.75, z: -4}
+  m_LocalPosition: {x: 1.48572, y: 2.74, z: -4.9167}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1265072385}
   m_LocalEulerAnglesHint: {x: 29.956, y: -3.67, z: -1.835}
 --- !u!114 &613590167
 MonoBehaviour:
@@ -478,7 +478,6 @@ GameObject:
   - component: {fileID: 664927446}
   - component: {fileID: 664927445}
   - component: {fileID: 664927444}
-  - component: {fileID: 664927450}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -699,31 +698,12 @@ Transform:
   m_GameObject: {fileID: 664927443}
   serializedVersion: 2
   m_LocalRotation: {x: 0.25887313, y: 2.4427162e-11, z: -2.1829981e-12, w: 0.9659114}
-  m_LocalPosition: {x: 0, y: 2.75, z: -4}
+  m_LocalPosition: {x: 1.48572, y: 2.74, z: -4.9167}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1265072385}
   m_LocalEulerAnglesHint: {x: 30.806, y: -0.023, z: -0.045}
---- !u!114 &664927450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664927443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41dd5994b63d4674db561dbc3aee464c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraLockOn
-  player: {fileID: 694727755}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  lockOnRadius: 15
-  rotationSpeed: 10
-  lockOnKey: 304
 --- !u!1 &694727750
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +717,7 @@ GameObject:
   - component: {fileID: 694727760}
   - component: {fileID: 694727759}
   - component: {fileID: 694727758}
+  - component: {fileID: 694727761}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -757,6 +738,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1183566310}
   - {fileID: 1105910376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -829,7 +811,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  isGrounded: 0
+  isGrounded: 1
 --- !u!114 &694727760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,6 +826,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   crochVisualisation: {fileID: 1105910377}
   currentState: 0
+--- !u!114 &694727761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694727750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e39d8a72d1da945bfedc7a3cfbaced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockOnManager
+  maxRadius: 20
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  enemyTag: Enemy
+  cameraPivot: {fileID: 1183566310}
+  playerModel: {fileID: 694727755}
+  rotationSpeed: 10
 --- !u!1 &837016281
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +953,7 @@ Transform:
   m_GameObject: {fileID: 837016281}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1339,6 +1341,38 @@ Transform:
   - {fileID: 1251499559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
+--- !u!1 &1183566309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1183566310}
+  m_Layer: 0
+  m_Name: CameraPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1183566310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183566309}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.51, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1265072385}
+  m_Father: {fileID: 694727755}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1197170627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,7 +1387,7 @@ GameObject:
   - component: {fileID: 1197170628}
   m_Layer: 3
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1565,6 +1599,39 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251499558}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1265072384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1265072385}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1265072385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265072384}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.48572, y: -1, z: 0.9167}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 613590166}
+  - {fileID: 664927449}
+  m_Father: {fileID: 1183566310}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1296795104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1934,8 +2001,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2087113903}
-  - {fileID: 613590166}
-  - {fileID: 664927449}
   - {fileID: 694727755}
   - {fileID: 837016285}
   - {fileID: 1148624031}

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerLocomotion : MonoBehaviour
 {
     InputManager inputManager;
+    LockOnManager lockOnManager;
 
     public Vector3 moveDirection;
     Transform cameraObject;
@@ -13,16 +14,16 @@ public class PlayerLocomotion : MonoBehaviour
 
     // public float speedMultiplier = 1f;
 
-    // Модификаторы скорости
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public float snowMultiplier = 1f;
 
-    // Переменная модификатор зависиящая от состояния передвижения игрока
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     public float currentSpeedMultiplier;
 
     [Header("Jump")]
     public float jumpHeight = 1.5f;
     public float groundCheckDistance = 0.2f;
-    public LayerMask groundLayers = ~0; // по умолчанию всё
+    public LayerMask groundLayers = ~0; // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ
 
     public bool isGrounded;
 
@@ -33,7 +34,7 @@ public class PlayerLocomotion : MonoBehaviour
         cameraObject = Camera.main.transform;
     }
 
-    public void HandleAllMovement() // входная точка в поворот и в движение
+    public void HandleAllMovement() // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         HandleMovement();
         HandleRotation();
@@ -47,9 +48,9 @@ public class PlayerLocomotion : MonoBehaviour
         moveDirection = cameraObject.forward * inputManager.verticalInput;
         moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
-        moveDirection.y = 0; // шоб не улетать когда смотришь вверх
+        moveDirection.y = 0; // пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
-        moveDirection *= movementSpeed * currentSpeedMultiplier * snowMultiplier; // Результирующее направление с учетом изменений
+        moveDirection *= movementSpeed * currentSpeedMultiplier * snowMultiplier; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
         Vector3 movementVelocity = moveDirection;
         var currentVel = playerRigidbody.linearVelocity;
@@ -76,7 +77,7 @@ public class PlayerLocomotion : MonoBehaviour
         transform.rotation = playerRotation;
     }
 
-    // Передаем множителю скорости состояний значение
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public void SetStatedSpeed(MovementState state) 
     {
         switch (state)
@@ -112,7 +113,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void CheckGround()
     {
-        // маленький луч вниз из центра
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Vector3 origin = transform.position + Vector3.up * 0.1f;
         isGrounded = Physics.Raycast(origin, Vector3.down, groundCheckDistance + 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
     }

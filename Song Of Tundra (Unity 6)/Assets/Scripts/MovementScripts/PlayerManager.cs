@@ -5,9 +5,9 @@ public class PlayerManager : MonoBehaviour
     InputManager inputManager;
     PlayerLocomotion playerLocomotion;
 
-    [SerializeField] private PlayerCrochVisualisation crochVisualisation; // Вызываем тут класс с ссылкой в инспекторе
+    [SerializeField] private PlayerCrochVisualisation crochVisualisation; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-    public MovementState currentState; // перменная для отслеживанияя текущего состояния передвижения
+    public MovementState currentState; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private void Awake()
     {
@@ -15,27 +15,27 @@ public class PlayerManager : MonoBehaviour
         playerLocomotion = GetComponent<PlayerLocomotion>();
     }
 
-    private void Update() // обращаемся каждый кадр к нашим инпутам
+    private void Update() // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         inputManager.HandleAllInput();
 
-        // Дебажим кнопки атак
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         HandleCombat();
 
-        // Вызываем проверку текущего состояния передвижения
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         MovementStateCheck();
         playerLocomotion.SetStatedSpeed(currentState);
 
-        // Визуалиция приседа
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         crochVisualisation.OnCrouchAnimation(currentState);
     }
 
-    private void FixedUpdate() // фиксированое кол-во кадров, поэтому именно тут обращаемся к нашим движениям
+    private void FixedUpdate() // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         playerLocomotion.HandleAllMovement();
     }
 
-    // Проверка текущего состояния передвижения
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public void MovementStateCheck()
     {
         if (inputManager.crouchInput) { currentState = MovementState.Crouch; return; }
@@ -45,11 +45,11 @@ public class PlayerManager : MonoBehaviour
         currentState = MovementState.Idle; 
     }
 
-    // ДЕБАГ РАБОТЫ АТАК, ПОТОМ УДАЛИТЬ
+    // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private void HandleCombat()
     {
-        if (inputManager.attackInput) Debug.Log("Атака нахуй)))");
-        if (inputManager.altAttackInput) Debug.Log("Другая атака нахуй)))");
+        if (inputManager.attackInput) Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)))");
+        if (inputManager.altAttackInput) Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)))");
     }
 
 }
