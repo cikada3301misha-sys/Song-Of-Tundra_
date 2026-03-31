@@ -33,6 +33,9 @@ public class LockOnManager : MonoBehaviour
         }
         else
         {
+            if(currentTarget != null){
+                currentTarget.GetComponent<TambourineRhythm>().Unfocus();
+            }
             currentTarget = null;
         }
     }
@@ -67,6 +70,7 @@ public class LockOnManager : MonoBehaviour
                 }
             }
         }
+        currentTarget.gameObject.GetComponent<TambourineRhythm>().Focus();
     }
 
     private void LookAtTarget()

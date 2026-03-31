@@ -9,7 +9,10 @@ public class TambourineRhythm : MonoBehaviour
     // Start is called before the first frame update
     private string _accuracy = "bad"; // значение точности попадания
     public bool newHit = true; // переменная для проверки был ли совершен удар в текущей итерации
+    public bool focus = false;
     public GameObject light, greenlight, yellowlight, redlight; // мигающий свет над врагом
+    public GameObject enemyStatsCanv;
+    public GameObject player;
     public TMP_Text resultText; // результат попадания
     public List<int> melodyList = new List<int>(); // список для задания ритма мелодии. 1 - удар есть, 0 - удара нет
     private int _noteCount = 0; // номер текущей ноты
@@ -17,12 +20,16 @@ public class TambourineRhythm : MonoBehaviour
 
     void Start()
     {
-        NextNote();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (focus && Input.GetMouseButtonDown(0))
+        {
+            Hit();
+        }
+        
     }
     public void NextNote()
     {
@@ -43,38 +50,63 @@ public class TambourineRhythm : MonoBehaviour
         _accuracy = "okay";
         yield return new WaitForSeconds(0.2f);
         _accuracy = "bad";
-        NextNote();
+        if(focus){
+            NextNote();
+        }
     }
     public IEnumerator Miss()
     {
         yield return new WaitForSeconds(0.7f); // пропуск удара
-        NextNote();
+        if(focus){
+            NextNote();
+        }
     }
     public void Hit() // выполняется при нажатии на кнопку, проверяем текущее значение accuracy
     {
-        if(!newHit || _accuracy == "bad")
-        {
-            StartCoroutine(TextShow("Неудачно", redlight));
+        if(player.GetComponent<PlayerStats>().mana > 10){
+            if(!newHit || _accuracy == "bad")
+            {
+                StartCoroutine(TextShow("Неудачно", redlight));
+            }
+            else switch (_accuracy)
+            {
+                case "okay":
+                    StartCoroutine(TextShow("Почти в такт",yellowlight));
+                    NowEnemy.DecreaseShield(0.2f); // уменьшение щита у врага
+                    break;
+                case "super":
+                    StartCoroutine(TextShow("В такт", greenlight));
+                    NowEnemy.DecreaseShield(0.1f);
+                    break;
+            }
+            newHit = false;
+            player.GetComponent<PlayerStats>().ManaSpend();
         }
-        else switch (_accuracy)
+        else
         {
-            case "okay":
-                StartCoroutine(TextShow("Почти в такт",yellowlight));
-                NowEnemy.DecreaseShield(0.2f); // уменьшение щита у врага
-                break;
-            case "super":
-                StartCoroutine(TextShow("В такт", greenlight));
-                NowEnemy.DecreaseShield(0.1f);
-                break;
+            player.GetComponent<PlayerStats>().HealthLose();
         }
-        newHit = false;
-    }
+        }
+   
     public IEnumerator TextShow(string result, GameObject resultLight) // выводим результат на экран после удара
     {
-        resultText.text = result;
+        //resultText.text = result;
         resultLight.SetActive(true); // включение света, который соответствует результату
         yield return new WaitForSeconds(0.5f);
-        resultText.text = "";
+        //resultText.text = "";
         resultLight.SetActive(false); 
+    }
+    public void Focus()
+    {
+        if(!focus){
+            focus = true;
+            NextNote();
+            enemyStatsCanv.SetActive(true);
+        }
+    }
+    public void Unfocus()
+    {
+        enemyStatsCanv.SetActive(false);
+        focus = false;
     }
 }
