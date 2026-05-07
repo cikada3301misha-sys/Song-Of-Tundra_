@@ -109,6 +109,7 @@ public class PlayerLocomotion : MonoBehaviour
 
         var v = playerRigidbody.linearVelocity;
         playerRigidbody.linearVelocity = new Vector3(v.x, jumpVelocity, v.z);
+        Debug.Log("walk");
     }
 
     private void CheckGround()

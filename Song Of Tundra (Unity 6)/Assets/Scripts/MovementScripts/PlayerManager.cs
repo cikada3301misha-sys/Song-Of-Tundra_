@@ -48,7 +48,7 @@ public class PlayerManager : MonoBehaviour
     // ����� ������ ����, ����� �������
     private void HandleCombat()
     {
-        if (inputManager.attackInput) Debug.Log("����� �����)))");
+        if (inputManager.attackInput);
         if (inputManager.altAttackInput) Debug.Log("������ ����� �����)))");
     }
 

@@ -5,84 +5,84 @@ public class InputManager : MonoBehaviour
 {
     private PlayerControls playerControls;
 
-    // Переменная для направления в формате вектора
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public Vector2 movementInput;
 
-    // Вектор выше будем делить на эти две переменные
+    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public float verticalInput;
     public float horizontalInput;
 
-    // Переменные для атак
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     public bool attackInput;
     public bool altAttackInput;
 
-    // Переменные для бдлокировки бега и для приседа
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public bool walkInput;
     public bool crouchInput;
 
-    // Переменная для прыжка
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     public bool jumpInput;
 
-    // Всю часть ниже я нихуя не понимаю но она работает
-    private void OnEnable() // когда объект активен
+    // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    private void OnEnable() // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
-        // Если система управления ещё не создана то надо создать
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
 
-            // ввод движения
+            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             playerControls.Player.Movement.performed += OnMovement;
             playerControls.Player.Movement.canceled += OnMovement;
 
-            // ввод атаки и альтернативной атаки
+            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             playerControls.Player.Attack.performed += OnAttack;
             playerControls.Player.Attack.canceled += OnAttack;
 
             playerControls.Player.AltAttack.performed += OnAltAttack;
             playerControls.Player.AltAttack.canceled += OnAltAttack;
 
-            // Ввод блокировки бега и приседа
+            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             playerControls.Player.Walk.performed += OnWalk;
             playerControls.Player.Walk.canceled += OnWalk;
 
             playerControls.Player.Crouch.performed += OnCrouch;
             playerControls.Player.Crouch.canceled += OnCrouch;
 
-            // Ввод прыжка
+            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             playerControls.Player.Jump.performed += OnJump;
         }
 
-        // Включаем приём инпута
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         playerControls.Enable();
     }
 
     private void OnDisable()
     {
-        // Выключаем приём инпута
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         playerControls.Disable();
     }
 
-    // Вызывается PlayerManager каждый кадр
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PlayerManager пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     public void HandleAllInput()
     {
         HandleMovementInput();
     }
 
-    // Разбираем Vector2 на оси
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Vector2 пїЅпїЅ пїЅпїЅпїЅ
     private void HandleMovementInput()
     {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
     }
 
-    // Обработчик ввода передвижения
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private void OnMovement(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
     }
 
-    // Обработчики ввода атак
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     private void OnAttack(InputAction.CallbackContext context)
     {
         attackInput = context.ReadValueAsButton();
@@ -93,7 +93,7 @@ public class InputManager : MonoBehaviour
         altAttackInput = context.ReadValueAsButton();
     }
 
-    // Обработчики ввода блокировки бега и приседа
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private void OnWalk(InputAction.CallbackContext context)
     {
         walkInput = context.ReadValueAsButton();
@@ -104,7 +104,7 @@ public class InputManager : MonoBehaviour
         crouchInput = context.ReadValueAsButton();
     }
 
-    // Обработчик ввода прыжка
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     private void OnJump(InputAction.CallbackContext context)
     {
         if (context.performed)

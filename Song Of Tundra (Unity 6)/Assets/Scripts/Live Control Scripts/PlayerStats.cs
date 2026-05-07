@@ -23,7 +23,7 @@ public class PlayerStats : MonoBehaviour
         RefreshHealthIcons();
 
         StartCoroutine(ManaRecovery());
-        StartCoroutine(TemperatureHealthRoutine());
+        //StartCoroutine(TemperatureHealthRoutine());
     }
 
     void Update()
